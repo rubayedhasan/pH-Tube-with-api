@@ -29,7 +29,9 @@
     <header class="w-11/12 mx-auto mt-12 pb-8 border-b border-[#17171733]">
       <!-- section unit::navbar  -->
       <nav>
-        <ul class="flex justify-between items-center">
+        <ul
+          class="flex flex-col md:flex-row justify-center md:justify-between items-center gap-5"
+        >
           <li class="w-[10.31rem]">
             <a href="">
               <img
@@ -39,7 +41,7 @@
               />
             </a>
           </li>
-          <li>
+          <li class="order-3 md:order-2">
             <label class="input">
               <svg
                 class="h-[1em] opacity-50"
@@ -64,9 +66,9 @@
               />
             </label>
           </li>
-          <li class="space-x-3">
+          <li class="space-x-3 order-2 md:order-3">
             <button
-              class="btn text-[#252525] md:text-lg font-medium bg-[#25252533]"
+              class="btn text-[#252525] md:text-lg font-medium bg-[#25252533] md:hidden lg:inline-flex"
               type="button"
             >
               Sort by view
