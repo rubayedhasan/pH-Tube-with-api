@@ -67,6 +67,21 @@ const loadAllVideos = async () => {
 // function:: display all video cards
 const displayAllVideos = (videos) => {
   const videoCardsContainer = document.querySelector("#video-cards-container");
+  //  validate: no data found
+  if (videos.length === 0) {
+    videoCardsContainer.classList.add("hidden");
+    document
+      .getElementById("no-video-found")
+      .classList.replace("hidden", "flex");
+
+    return;
+  } else {
+    videoCardsContainer.classList.remove("hidden");
+    document
+      .getElementById("no-video-found")
+      .classList.replace("flex", "hidden");
+  }
+
   // clear old result
   videoCardsContainer.innerHTML = "";
 
