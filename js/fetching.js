@@ -15,7 +15,8 @@ const displayCategoriesAsBtn = (categories) => {
   categories.forEach((category) => {
     const categoryBtn = document.createElement("button");
     categoryBtn.id = `btn-${category.category_id}`;
-    categoryBtn.classList = "btn font-medium text-[#252525B3] bg-[#25252526]";
+    categoryBtn.classList =
+      "btn font-medium text-[#252525B3] bg-[#25252526] common-category-btn";
     categoryBtn.innerText = category.category;
 
     categoryMenuContainer.appendChild(categoryBtn);
@@ -23,6 +24,17 @@ const displayCategoriesAsBtn = (categories) => {
     // event handler for categorize data
     categoryBtn.onclick = () => {
       loadVideoCategorize(category.category_id);
+
+      // reset all button active state
+      const allCategoryBtn = document.getElementsByClassName(
+        "common-category-btn"
+      );
+      for (const categoryBtn of allCategoryBtn) {
+        categoryBtn.classList.remove("active");
+      }
+
+      // active the button on clicked
+      categoryBtn.classList.add("active");
     };
   });
 };
