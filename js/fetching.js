@@ -53,7 +53,13 @@ const displayAllVideos = (videos) => {
     </figure>
     <div class="space-y-2">
     <h5 class="font-bold text-[#171717] leading-6">${video?.title}</h5>
-    <p class="text-sm text-[#171717B3]">${video?.authors[0]?.profile_name}</p>
+    <p class="text-sm text-[#171717B3]">${video?.authors[0]?.profile_name} ${
+      video?.authors[0]?.verified
+        ? `<span><img
+      src="https://img.icons8.com/?size=96&id=98A4yZTt9abw&format=png"
+      alt="verified badge" class="w-5 h-5 inline-block" /></span>`
+        : ""
+    }</p>
     <p class="text-sm text-[#171717B3]">${video?.others?.views}</p>
     </div>
   </div>
