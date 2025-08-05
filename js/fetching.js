@@ -14,11 +14,28 @@ const displayCategoriesAsBtn = (categories) => {
 
   categories.forEach((category) => {
     const categoryBtn = document.createElement("button");
+    categoryBtn.id = `btn-${category.category_id}`;
     categoryBtn.classList = "btn font-medium text-[#252525B3] bg-[#25252526]";
     categoryBtn.innerText = category.category;
 
     categoryMenuContainer.appendChild(categoryBtn);
+
+    // event handler for categorize data
+    categoryBtn.onclick = () => {
+      loadVideoCategorize(category.category_id);
+    };
   });
+};
+
+// function:: fetching data categorizes
+const loadVideoCategorize = async (categoryId) => {
+  const responseForCategorizeData = await fetch(
+    `https://openapi.programming-hero.com/api/phero-tube/category/${categoryId}`
+  );
+  const categorizeData = await responseForCategorizeData.json();
+
+  // display categorize video in cards
+  displayAllVideos(categorizeData.category);
 };
 
 // function:: fetching all data for videos from server
@@ -34,6 +51,9 @@ const loadAllVideos = async () => {
 // function:: display all video cards
 const displayAllVideos = (videos) => {
   const videoCardsContainer = document.querySelector("#video-cards-container");
+  // clear old result
+  videoCardsContainer.innerHTML = "";
+
   videos.forEach((video) => {
     const videoCard = document.createElement("div");
     videoCard.classList = "card w-full";
