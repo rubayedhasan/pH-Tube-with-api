@@ -64,6 +64,32 @@ const loadAllVideos = async () => {
   displayAllVideos(dataOfVideos.videos);
 };
 
+// slice of posted time
+const sliceOfTime = (time) => {
+  let x;
+  let hour = parseInt(time / 3600);
+  if (hour > 8760) {
+    hour /= 8760;
+
+    x = `${parseInt(hour)} year`;
+  } else if (hour > 720) {
+    hour /= 720;
+
+    x = `${parseInt(hour)} month`;
+  } else if (hour > 24) {
+    hour /= 24;
+
+    x = `${parseInt(hour)} day`;
+  } else {
+    x = `${parseInt(hour)} hr`;
+  }
+
+  const remainingTime = time % 3600;
+  const minute = parseInt(remainingTime / 60);
+
+  return `${x} ${minute} min ago`;
+};
+
 // function:: display all video cards
 const displayAllVideos = (videos) => {
   const videoCardsContainer = document.querySelector("#video-cards-container");
@@ -89,11 +115,18 @@ const displayAllVideos = (videos) => {
     const videoCard = document.createElement("div");
     videoCard.classList = "card w-full";
     videoCard.innerHTML = `
-    <figure>
+    <figure class="relative">
     <img
       src="${video?.thumbnail}"
       alt="${video?.title}"
       class="object-cover h-[200px] w-full rounded" />
+       ${
+         video?.others?.posted_date
+           ? `<figcaption class="absolute right-2 bottom-2 bg-[#171717] px-3 py-2 rounded text-xs text-white">
+      ${sliceOfTime(video?.others?.posted_date)}
+      </figcaption>`
+           : ""
+       }
   </figure>
   <div class="flex items-start gap-5 pt-5">
     <figure>
