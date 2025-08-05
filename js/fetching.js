@@ -101,6 +101,22 @@ const displayAllVideos = (videos) => {
   });
 };
 
+// event handler:: for search box to find video by search
+const searchBox = document.getElementById("search-input-field");
+searchBox.addEventListener("keyup", (event) => {
+  loadVideosBySearch(searchBox.value);
+});
+
+const loadVideosBySearch = async (searchItem) => {
+  const responseVideosOnSearch = await fetch(
+    `https://openapi.programming-hero.com/api/phero-tube/videos?title=${searchItem}`
+  );
+  const dataBySearch = await responseVideosOnSearch.json();
+
+  // display videos by searched data
+  displayAllVideos(dataBySearch.videos);
+};
+
 // calling the function globally
 loadCategories();
 loadAllVideos();
