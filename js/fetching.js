@@ -25,18 +25,22 @@ const displayCategoriesAsBtn = (categories) => {
     categoryBtn.onclick = () => {
       loadVideoCategorize(category.category_id);
 
-      // reset all button active state
-      const allCategoryBtn = document.getElementsByClassName(
-        "common-category-btn"
-      );
-      for (const categoryBtn of allCategoryBtn) {
-        categoryBtn.classList.remove("active");
-      }
+      // deactives buttons
+      deactiveButtons();
 
       // active the button on clicked
       categoryBtn.classList.add("active");
     };
   });
+};
+
+// reset all button active state
+const deactiveButtons = () => {
+  // reset all button active state
+  const allCategoryBtn = document.getElementsByClassName("common-category-btn");
+  for (const btn of allCategoryBtn) {
+    btn.classList.remove("active");
+  }
 };
 
 // function:: fetching data categorizes
@@ -116,6 +120,18 @@ const loadVideosBySearch = async (searchItem) => {
   // display videos by searched data
   displayAllVideos(dataBySearch.videos);
 };
+
+// event handler for all button
+const btnAllVideos = document.querySelector("#btn-all");
+btnAllVideos.addEventListener("click", () => {
+  // deactive buttons
+  deactiveButtons();
+
+  btnAllVideos.classList.add("active");
+
+  // for all videos
+  loadAllVideos();
+});
 
 // calling the function globally
 loadCategories();
