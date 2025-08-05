@@ -123,9 +123,14 @@ const displayAllVideos = (videos) => {
 // event handler:: for search box to find video by search
 const searchBox = document.getElementById("search-input-field");
 searchBox.addEventListener("keyup", (event) => {
+  // deactive buttons active state
+  deactiveButtons();
+
+  // loadvideos
   loadVideosBySearch(searchBox.value);
 });
 
+// function:: for load all video on searching
 const loadVideosBySearch = async (searchItem) => {
   const responseVideosOnSearch = await fetch(
     `https://openapi.programming-hero.com/api/phero-tube/videos?title=${searchItem}`
@@ -139,7 +144,7 @@ const loadVideosBySearch = async (searchItem) => {
 // event handler for all button
 const btnAllVideos = document.querySelector("#btn-all");
 btnAllVideos.addEventListener("click", () => {
-  // deactive buttons
+  // deactive buttons active state
   deactiveButtons();
 
   btnAllVideos.classList.add("active");
