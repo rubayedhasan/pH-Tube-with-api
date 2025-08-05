@@ -128,7 +128,12 @@ const displayAllVideos = (videos) => {
            : ""
        }
   </figure>
-  <div class="flex items-start gap-5 pt-5">
+  <div class="mt-1.5">
+  <button type="button" class="btn btn-outline w-full font-medium text-[#252525B3] outline-[#25252526]" onclick="loadVideoDescription('${
+    video?.video_id
+  }')">Show Description</button>
+  </div>
+  <div class="flex items-start gap-5 mt-5">
     <figure>
     <img
       src="${video?.authors[0]?.profile_picture}"
@@ -185,6 +190,29 @@ btnAllVideos.addEventListener("click", () => {
   // for all videos
   loadAllVideos();
 });
+
+// function:: fetch the description
+const loadVideoDescription = async (videoId) => {
+  const responseOnVideoId = await fetch(
+    `https://openapi.programming-hero.com/api/phero-tube/video/${videoId}`
+  );
+  const dataOfVideo = await responseOnVideoId.json();
+
+  displayVideoDescription(dataOfVideo.video);
+};
+
+// function:: display video description
+const displayVideoDescription = (videoSegment) => {
+  const descriptionBox = document.querySelector("#description-container");
+  descriptionBox.innerHTML = `
+  <h4><strong>Title:</strong> ${videoSegment?.title}</h4>
+  <p class="text-justify"><strong>Description:</strong> ${videoSegment?.description}</p>
+  <h6 class="text-sm italic underline">By - ${videoSegment?.authors[0]?.profile_name}</h6>
+  `;
+
+  // open the modal
+  video_description_modal.showModal();
+};
 
 // calling the function globally
 loadCategories();
