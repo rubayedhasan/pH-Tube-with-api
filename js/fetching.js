@@ -1,3 +1,6 @@
+// for store data
+let allData;
+
 // function:: fetching the data for categories
 const loadCategories = async () => {
   const requestForCategoriesData = await fetch(
@@ -50,6 +53,9 @@ const loadVideoCategorize = async (categoryId) => {
   );
   const categorizeData = await responseForCategorizeData.json();
 
+  // store data
+  allData = categorizeData.category;
+
   // display categorize video in cards
   displayAllVideos(categorizeData.category);
 };
@@ -61,33 +67,36 @@ const loadAllVideos = async () => {
   );
   const dataOfVideos = await responseForVideos.json();
 
+  // store all data
+  allData = dataOfVideos.videos;
+
   displayAllVideos(dataOfVideos.videos);
 };
 
 // slice of posted time
 const sliceOfTime = (time) => {
-  let x;
+  let theHour;
   let hour = parseInt(time / 3600);
   if (hour > 8760) {
     hour /= 8760;
 
-    x = `${parseInt(hour)} year`;
+    theHour = `${parseInt(hour)} year`;
   } else if (hour > 720) {
     hour /= 720;
 
-    x = `${parseInt(hour)} month`;
+    theHour = `${parseInt(hour)} month`;
   } else if (hour > 24) {
     hour /= 24;
 
-    x = `${parseInt(hour)} day`;
+    theHour = `${parseInt(hour)} day`;
   } else {
-    x = `${parseInt(hour)} hr`;
+    theHour = `${parseInt(hour)} hr`;
   }
 
   const remainingTime = time % 3600;
   const minute = parseInt(remainingTime / 60);
 
-  return `${x} ${minute} min ago`;
+  return `${theHour} ${minute} min ago`;
 };
 
 // function:: display all video cards
@@ -213,6 +222,29 @@ const displayVideoDescription = (videoSegment) => {
   // open the modal
   video_description_modal.showModal();
 };
+
+// event handler:: to sort the videos to ascending to descending order
+document.getElementById("sort-btn").addEventListener("click", (event) => {
+  // function:: for get the views number
+  function parseViews(viewString) {
+    if (viewString.endsWith("K")) {
+      return parseFloat(viewString) * 1000;
+    } else if (viewString.endsWith("M")) {
+      return parseFloat(viewString) * 1000000;
+    } else {
+      return parseInt(viewString);
+    }
+  }
+
+  // sort and display
+  displayAllVideos(
+    allData.sort((firsVideoObj, secondVideoObj) => {
+      const viewsFirst = parseViews(firsVideoObj.others.views);
+      const viewsSecond = parseViews(secondVideoObj.others.views);
+      return viewsSecond - viewsFirst; // descending order
+    })
+  );
+});
 
 // calling the function globally
 loadCategories();
