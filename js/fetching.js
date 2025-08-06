@@ -207,7 +207,7 @@ const displayVideoDescription = (videoSegment) => {
   descriptionBox.innerHTML = `
   <h4><strong>Title:</strong> ${videoSegment?.title}</h4>
   <p class="text-justify"><strong>Description:</strong> ${videoSegment?.description}</p>
-  <h6 class="text-sm italic underline">By - ${videoSegment?.authors[0]?.profile_name}</h6>
+  <h6 class="text-sm italic underline"><a href="">By - ${videoSegment?.authors[0]?.profile_name}</a></h6>
   `;
 
   // open the modal
